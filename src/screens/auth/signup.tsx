@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect, useReducer, useState } from 'react'
 import { Alert, StyleSheet, View, ScrollView, Text } from 'react-native'
 import { useDispatch } from 'react-redux'
-import { FONT_FAMILY, FONT_SIZE } from '../../constants'
+import { FONT_SIZE } from '../../constants'
 import { StatusBar } from 'react-native'
 import Loader from '../../components/Loader'
 import { Button, useTheme } from 'react-native-paper';
 import { CustomTextInput } from '../../components/CustomInput'
-import { LoginScreenProps } from '../../interface/Screen'
+import { SignupScreenProps } from '../../interface/Screen'
 import { loginAction } from '../../store/auth/actions'
 
 enum FormReducerType {
@@ -15,9 +15,10 @@ enum FormReducerType {
 
 enum FormInputEnum {
     email = "email",
-    password = "password"
+    password = "password",
+    username = "username",
 }
-type FormInputType = "email" | "password"
+type FormInputType = "email" | "password" | "username";
 
 interface IFormReducerState {
     inputValues: {
@@ -64,7 +65,7 @@ function formReducer(state: IFormReducerState, action: FormAction): IFormReducer
 
 }
 
-function Login(props: LoginScreenProps) {
+function Signup(props: SignupScreenProps) {
     const theme = useTheme();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
@@ -73,11 +74,13 @@ function Login(props: LoginScreenProps) {
     const [formState, dispatchFormState] = useReducer(formReducer, {
         inputValues: {
             email: "",
-            password: ""
+            password: "",
+            username: ""
         },
         inputValidities: {
             email: false,
-            password: false
+            password: false,
+            username: false
         },
         formIsValid: false
     });
@@ -125,19 +128,31 @@ function Login(props: LoginScreenProps) {
                 <ScrollView>
                     <View>
                         <View style={styles.heading}>
-                            <Text style={[styles.headingText, { color: theme.colors.text }]}>Login</Text>
+                            <Text style={[styles.headingText, { color: theme.colors.text }]}>Signup</Text>
                         </View>
                         <CustomTextInput
-                            name="email"
-                            label="Username/Email"
-                            keyboardType="email-address"
+                            name="username"
+                            label="Username"
                             required
                             autoCapitalize="none"
-                            errorText="Please enter a valid email address"
+                            errorText="Please enter different username"
                             onInputChange={handleInputChange}
-                            inititalValue={formState.inputValues.email}
+                            inititalValue={formState.inputValues.username}
                             touched
                         />
+                        <View style={styles.mt}>
+                            <CustomTextInput
+                                name="email"
+                                label="Email"
+                                keyboardType="email-address"
+                                required
+                                autoCapitalize="none"
+                                errorText="Please enter a valid email address"
+                                onInputChange={handleInputChange}
+                                inititalValue={formState.inputValues.email}
+                                touched
+                            />
+                        </View>
                         <View style={styles.mt}>
                             <CustomTextInput
                                 name="password"
@@ -166,8 +181,8 @@ function Login(props: LoginScreenProps) {
                     <View style={styles.extraBtnContainer}>
                         <Button
                             style={{ backgroundColor: theme.colors.primary }}
-                            onPress={() => props.navigation.navigate("signup")}>
-                            <Text style={[styles.loginText, { color: theme.colors.background }]}>Signup</Text>
+                            onPress={() => props.navigation.navigate("login")}>
+                            <Text style={[styles.loginText, { color: theme.colors.background }]}>Login</Text>
                         </Button>
                         <Button
                             style={{ backgroundColor: theme.colors.primary, marginTop: 10 }}
@@ -182,7 +197,7 @@ function Login(props: LoginScreenProps) {
     )
 }
 
-export default Login
+export default Signup
 
 const styles = StyleSheet.create({
     container: {
@@ -218,11 +233,12 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     headingText: {
+        // fontFamily: FONT_FAMILY.BOLD,
         fontSize: FONT_SIZE.EXTRA_LARGE,
         fontWeight: "600"
     },
     mt: {
-        marginTop: 20
+        marginTop: 10
     },
     extraBtnContainer: {
         marginTop: 40

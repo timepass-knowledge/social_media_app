@@ -22,7 +22,7 @@ function Loader({ loading, message }: ILoader) {
             visible={loading}
             onRequestClose={() => { }}>
             <View style={styles.modalBackground}>
-                <View style={[styles.activityIndicatorWrapper, { backgroundColor: theme.colors.accent }]}>
+                <View style={[styles.activityIndicatorWrapper, { backgroundColor: theme.colors.primary }]}>
                     <ActivityIndicator
                         color={theme.colors.background}
                         animating={loading} />
@@ -43,8 +43,6 @@ const styles = StyleSheet.create({
 
     },
     activityIndicatorWrapper: {
-        // height: 100,
-        // width: 100,
         padding: 15,
         flexDirection: 'row',
         borderRadius: 10,

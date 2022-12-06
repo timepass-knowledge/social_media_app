@@ -182,13 +182,13 @@ const styles = StyleSheet.create({
         width: "100%"
     },
     input: {
-        fontFamily: FONT_FAMILY.REGULAR,
+        // fontFamily: FONT_FAMILY.REGULAR,
         fontWeight: "500",
         fontSize: FONT_SIZE.EXTRA_SMALL,
         width: "100%",
     },
     label: {
-        fontFamily: FONT_FAMILY.BOLD,
+        // fontFamily: FONT_FAMILY.BOLD,
         fontSize: FONT_SIZE.SMALL
     },
     errorContainer: {
@@ -196,7 +196,7 @@ const styles = StyleSheet.create({
         marginLeft: 5
     },
     errorText: {
-        fontFamily: FONT_FAMILY.REGULAR,
+        // fontFamily: FONT_FAMILY.REGULAR,
         fontSize: FONT_SIZE.EXTRA_SMALL
     },
     passwordViewContainer: {

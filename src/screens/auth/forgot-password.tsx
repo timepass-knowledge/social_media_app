@@ -6,8 +6,7 @@ import { StatusBar } from 'react-native'
 import Loader from '../../components/Loader'
 import { Button, useTheme } from 'react-native-paper';
 import { CustomTextInput } from '../../components/CustomInput'
-import { LoginScreenProps } from '../../interface/Screen'
-import { loginAction } from '../../store/auth/actions'
+import { ForgotPasswordScreenProps } from '../../interface/Screen'
 
 enum FormReducerType {
     FORM_INPUT_UPDATE = "FORM_INPUT_UPDATE",
@@ -15,9 +14,8 @@ enum FormReducerType {
 
 enum FormInputEnum {
     email = "email",
-    password = "password"
 }
-type FormInputType = "email" | "password"
+type FormInputType = "email"
 
 interface IFormReducerState {
     inputValues: {
@@ -64,7 +62,7 @@ function formReducer(state: IFormReducerState, action: FormAction): IFormReducer
 
 }
 
-function Login(props: LoginScreenProps) {
+function ForgotPassword(props: ForgotPasswordScreenProps) {
     const theme = useTheme();
     const dispatch = useDispatch();
     const [isLoading, setIsLoading] = useState(false);
@@ -73,11 +71,9 @@ function Login(props: LoginScreenProps) {
     const [formState, dispatchFormState] = useReducer(formReducer, {
         inputValues: {
             email: "",
-            password: ""
         },
         inputValidities: {
             email: false,
-            password: false
         },
         formIsValid: false
     });
@@ -93,11 +89,10 @@ function Login(props: LoginScreenProps) {
 
     async function authHanlder() {
         if (formState.formIsValid) {
-            const { email, password } = formState.inputValues;
+            const { email } = formState.inputValues;
             setError(undefined)
             setIsLoading(true);
             try {
-                await dispatch(loginAction({ email, password }));
                 setIsLoading(false)
             } catch (err: any) {
                 setError(err.message)
@@ -125,7 +120,7 @@ function Login(props: LoginScreenProps) {
                 <ScrollView>
                     <View>
                         <View style={styles.heading}>
-                            <Text style={[styles.headingText, { color: theme.colors.text }]}>Login</Text>
+                            <Text style={[styles.headingText, { color: theme.colors.text }]}>Forgot Password</Text>
                         </View>
                         <CustomTextInput
                             name="email"
@@ -138,22 +133,6 @@ function Login(props: LoginScreenProps) {
                             inititalValue={formState.inputValues.email}
                             touched
                         />
-                        <View style={styles.mt}>
-                            <CustomTextInput
-                                name="password"
-                                label="Password"
-                                keyboardType="default"
-                                secureTextEntry
-                                required
-                                minLength={5}
-                                autoCapitalize="none"
-                                errorText="Please enter a valid password"
-                                onInputChange={handleInputChange}
-                                inititalValue={formState.inputValues.password}
-                                password
-                                touched
-                            />
-                        </View>
                         <View style={styles.btnContainer}>
                             <Button
                                 style={{ backgroundColor: theme.colors.primary }}
@@ -171,8 +150,8 @@ function Login(props: LoginScreenProps) {
                         </Button>
                         <Button
                             style={{ backgroundColor: theme.colors.primary, marginTop: 10 }}
-                            onPress={() => props.navigation.navigate("forgotPassword")}>
-                            <Text style={[styles.loginText, { color: theme.colors.background }]}>Forgot Password</Text>
+                            onPress={() => props.navigation.navigate("login")}>
+                            <Text style={[styles.loginText, { color: theme.colors.background }]}>Login</Text>
                         </Button>
                     </View>
                 </ScrollView>
@@ -182,7 +161,7 @@ function Login(props: LoginScreenProps) {
     )
 }
 
-export default Login
+export default ForgotPassword
 
 const styles = StyleSheet.create({
     container: {
@@ -218,7 +197,8 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     headingText: {
-        fontSize: FONT_SIZE.EXTRA_LARGE,
+        // fontFamily: FONT_FAMILY.BOLD,
+        fontSize: FONT_SIZE.MEDIUM,
         fontWeight: "600"
     },
     mt: {

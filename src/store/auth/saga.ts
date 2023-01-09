@@ -1,6 +1,7 @@
 import { GET_USER_PROFILE } from './action-types';
 import { takeEvery, fork, put, all, call } from 'redux-saga/effects'
 import { loginService } from '../../services/auth.service';
+import { navigationRef } from '../../navigations';
 
 interface IResponse {
     data: any,
@@ -14,6 +15,7 @@ function* fetchUserData(data: any) {
             loginService,
             data.payload
         )
+        console.log(navigationRef.current)
     }
     catch (error) {
         console.error(error);

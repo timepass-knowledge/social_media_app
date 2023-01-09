@@ -4,13 +4,15 @@ import { StackNavigationProp } from "@react-navigation/stack";
 export enum AuthStackNavigationParamListEnum {
     login = "login",
     forgotPassword = "forgotPassword",
-    signup = "signup"
+    signup = "signup",
+    dashboard = "dashboard",
 };
 
 export type AuthStackNavigationParamList = {
     login: undefined;
     forgotPassword: undefined,
     signup: undefined;
+    dashboard: undefined
 };
 
 type LoginScreenRouteProp = RouteProp<AuthStackNavigationParamList, "login">;

@@ -97,7 +97,8 @@ function Login(props: LoginScreenProps) {
             setError(undefined)
             setIsLoading(true);
             try {
-                await dispatch(loginAction({ email, password }));
+                dispatch(loginAction({ email, password }));
+                props.navigation.navigate("dashboard")
                 setIsLoading(false)
             } catch (err: any) {
                 setError(err.message)
